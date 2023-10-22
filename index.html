@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lehrstelle Bewerbung</title>
+    <!-- ... (rest of your head content) ... -->
     <style>
         * {
             margin: 0;
@@ -176,7 +177,7 @@
             bottom: -1400px;
             left: 50%;
             transform: translateX(-50%);
-            width: 2000px;
+            width: 20000px;
             height: 899px;
             border: 1px solid #ccc;
             background-color: #00FF00; /* Green color */
@@ -282,6 +283,24 @@
             white-space: nowrap;
             margin-top: -250px;
         }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .book {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            #image-container,
+            #bottom-image-container,
+            #middle-image-container,
+            #another-image-container {
+                width: 100%;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
     </style>
     <script src="https://kit.fontawesome.com/b0f29e9bfe.js" crossorigin="anonymous"></script>
 </head>
@@ -329,7 +348,7 @@
             </div>
             <div class="back">
                 <div id="b3" class="back-content">
-                
+
                 </div>
             </div>
         </div>
