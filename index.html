@@ -19,7 +19,7 @@
             flex-direction: column;
             align-items: center;
             font-family: sans-serif;
-            background-color: #0000FF;
+            background-color: #fff8e7;
             height: 305vh;
             overflow: auto;
             overflow-x: hidden; /* Prevent scrolling to the right */
@@ -59,7 +59,7 @@
         .front {
             z-index: 1;
             backface-visibility: hidden;
-            border-left: 3px solid powderblue;
+            border-left: 3px solid #fff8e7;
         }
 
         .back {
@@ -167,20 +167,20 @@
             left: 50%;
             width: 10000px;
             height: 150%;
-            background-color: #FFFF00; /* Green color */
+            background-color: #fff8e7; /* Green color */
             transform: translateX(-50%);
             z-index: -1;
         }
 
         #image-under-yellow-background {
             position: absolute;
+            position: center;
             bottom: -1400px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20000px;
-            height: 899px;
-            border: 1px solid #ccc;
-            background-color: #00FF00; /* Green color */
+            width: 200000px;
+            height: 900px;
+            background-color: #fff8e7; /* Green color */
             z-index: 0;
         }
 
@@ -191,7 +191,7 @@
             left: 50%;
             width: 10000px;
             height: 150%;
-            background-color: #FF0000; /* Red color */
+            background-color: #fff8e7; /* Red color */
             transform: translateX(-50%);
             z-index: -2;
         }
@@ -206,7 +206,7 @@
         #bottom-image-container {
             position: absolute;
             bottom: -1380px;
-            left: 50%;
+            left: 75%;
             transform: translateX(-50%);
             width: 650px;
             height: 850px;
@@ -220,6 +220,7 @@
             object-fit: cover;
         }
 
+        /* Middle Image Placeholder */
         #middle-image-container {
             position: absolute;
             bottom: -1930px;
@@ -267,7 +268,7 @@
             left: 1000%;
             width: 10000px;
             height: 150%;
-            background-color: #FFFF00; /* Green color */
+            background-color: #fff8e7; /* Green color */
             transform: translateX(-50%);
             z-index: -1;
         }
@@ -284,6 +285,42 @@
             margin-top: -250px;
         }
 
+        /* Left Image Placeholder for "bewerbung" */
+        #bewerbung-image-container {
+            position: absolute;
+            bottom: -1380px;
+            left: 30%; /* Adjust the left position as needed */
+            transform: translateX(-50%);
+            width: 650px;
+            height: 850px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #bewerbung-inserted-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Adjusted styles for left "leben" image placeholder */
+        #left-leben-image-container {
+            position: absolute;
+            bottom: -1380px;
+            left: -70%; /* Adjust the left position as needed */
+            transform: translateX(-50%);
+            width: 650px;
+            height: 850px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #left-leben-inserted-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .book {
@@ -294,7 +331,9 @@
             #image-container,
             #bottom-image-container,
             #middle-image-container,
-            #another-image-container {
+            #another-image-container,
+            #bewerbung-image-container,
+            #left-leben-image-container {
                 width: 100%;
                 max-width: 400px;
                 margin-left: auto;
@@ -322,7 +361,7 @@
             </div>
             <div class="back">
                 <div id="b1" class="back-content">
-                    <img src="zg.jpg" alt="Back Image 1" style="width: 100%; height: 100%;">
+                    <img src="9.klasse.jpg" alt="Back Image 1" style="width: 100%; height: 100%;">
                 </div>
             </div>
         </div>
@@ -330,12 +369,12 @@
         <div id="p2" class="paper">
             <div class="front">
                 <div id="f2" class="front-content">
-                    <img src="zeug.jpg" alt="Front Image 2" style="width: 100%; height: 100%;">
+                    <img src="9.klassefallen.jpg" alt="Front Image 2" style="width: 100%; height: 100%;">
                 </div>
             </div>
             <div class="back">
                 <div id="b2" class="back-content">
-                    <img src="zeg.jpg" alt="Back Image 2" style="width: 100%; height: 100%;">
+                    <img src="8klasse.jpg" alt="Back Image 2" style="width: 100%; height: 100%;">
                 </div>
             </div>
         </div>
@@ -343,7 +382,7 @@
         <div id="p3" class="paper">
             <div class="front">
                 <div id="f3" class="front-content">
-                    <img src="zug.jpg" alt="Front Image 3" style="width: 100%; height: 100%;">
+                    <img src="8un.jpg" alt="Front Image 3" style="width: 100%; height: 100%;">
                 </div>
             </div>
             <div class="back">
@@ -394,6 +433,18 @@
         <div id="another-link">Website</div>
     </div>
 
+    <!-- Bewerbung Image Placeholder -->
+    <div id="bewerbung-image-container">
+        <!-- Insert your "bewerbung" image here -->
+        <img id="bewerbung-inserted-image" src="bewerbung.jpg" alt="Bewerbung Image">
+    </div>
+
+    <!-- Adjusted "Leben" Image Placeholder -->
+    <div id="left-leben-image-container">
+        <!-- Insert your adjusted "leben" image here -->
+        <img id="left-leben-inserted-image" src="leben.jpg" alt="Left Leben Image">
+    </div>
+
     <script>
         // References to DOM Elements
         const prevBtn = document.querySelector("#prev-btn");
@@ -402,6 +453,8 @@
         const insertedImage = document.querySelector("#inserted-image");
         const middleImage = document.querySelector("#middle-inserted-image");
         const anotherImage = document.querySelector("#another-inserted-image");
+        const bewerbungImage = document.querySelector("#bewerbung-inserted-image");
+        const leftLebenImage = document.querySelector("#left-leben-inserted-image");
 
         const paper1 = document.querySelector("#p1");
         const paper2 = document.querySelector("#p2");
