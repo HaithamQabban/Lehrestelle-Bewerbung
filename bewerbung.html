@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lehrstelle Bewerbung</title>
+    <!-- ... (rest of your head content) ... -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: sans-serif;
+            background-color: #fff8e7;
+            height: 305vh;
+            overflow: auto;
+            overflow-x: hidden; /* Prevent scrolling to the right */
+        }
+
+        /* Book */
+        .book {
+            position: relative;
+            width: 650px;
+            height: 800px;
+            margin: 120px 0;
+            transition: transform 0.5s;
+            margin-top: 20px;
+        }
+
+        .paper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            perspective: 1500px;
+        }
+
+        .front,
+        .back {
+            background-color: #ffffff;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: left;
+            transition: transform 0.5s;
+        }
+
+        .front {
+            z-index: 1;
+            backface-visibility: hidden;
+            border-left: 3px solid #fff8e7;
+        }
+
+        .back {
+            z-index: 0;
+        }
+
+        .front-content,
+        .back-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .back-content {
+            transform: rotateY(180deg);
+        }
+
+        /* Paper flip effect */
+        .flipped .front,
+        .flipped .back {
+            transform: rotateY(-180deg);
+        }
+
+        /* Controller Buttons */
+        #prev-btn,
+        #next-btn {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            margin: 400px;
+            transition: transform 0.5s;
+            position: absolute;
+        }
+
+        #prev-btn {
+            left: 0;
+        }
+
+        #next-btn {
+            right: 0;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button:hover i {
+            color: #636363;
+        }
+
+        i {
+            font-size: 50px;
+            color: gray;
+        }
+
+        /* Paper stack order */
+        #p1 {
+            z-index: 3;
+        }
+
+        #p2 {
+            z-index: 2;
+        }
+
+        #p3 {
+            z-index: 1;
+        }
+
+        /* Image Placeholder */
+        #image-container {
+            position: relative;
+            margin-top: 20px;
+            width: 650px;
+            height: 400px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            margin-left: 1000px;
+            cursor: pointer;
+        }
+
+        #inserted-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #erfahrungen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 24px;
+            color: black;
+            white-space: nowrap;
+            margin-top: -250px;
+        }
+
+        /* Set the background color under the line to yellow */
+        #image-container::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            width: 10000px;
+            height: 150%;
+            background-color: #fff8e7; /* Green color */
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        #image-under-yellow-background {
+            position: absolute;
+            position: center;
+            bottom: -1400px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200000px;
+            height: 900px;
+            background-color: #fff8e7; /* Green color */
+            z-index: 0;
+        }
+
+        #image-container::before {
+            content: '';
+            position: absolute;
+            bottom: -1570px;
+            left: 50%;
+            width: 10000px;
+            height: 150%;
+            background-color: #fff8e7; /* Red color */
+            transform: translateX(-50%);
+            z-index: -2;
+        }
+
+        #inserted-image-under-yellow {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Added styles for bottom image placeholder */
+        #bottom-image-container {
+            position: absolute;
+            bottom: -1380px;
+            left: 75%;
+            transform: translateX(-50%);
+            width: 650px;
+            height: 850px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #bottom-inserted-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Middle Image Placeholder */
+        #middle-image-container {
+            position: absolute;
+            bottom: -1930px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 500px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        #middle-inserted-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.5s;
+        }
+
+        /* Another Image Placeholder */
+        #another-image-container {
+            position: relative;
+            margin-top: -420px;
+            width: 650px;
+            height: 400px;
+            border: 1px solid #ccc;
+            margin-bottom: -900px;
+            margin-right: 1000px;
+            cursor: pointer;
+            float: left;
+        }
+
+        #another-inserted-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Set the background color under the line to yellow */
+        #another-image-container::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: 1000%;
+            width: 10000px;
+            height: 150%;
+            background-color: #fff8e7; /* Green color */
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        /* Another Image Link */
+        #another-link {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 24px;
+            color: black;
+            white-space: nowrap;
+            margin-top: -250px;
+        }
+
+        /* Left Image Placeholder for "bewerbung" */
+        #bewerbung-image-container {
+            position: absolute;
+            bottom: -1380px;
+            left: 30%; /* Adjust the left position as needed */
+            transform: translateX(-50%);
+            width: 650px;
+            height: 850px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #bewerbung-inserted-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Adjusted styles for left "leben" image placeholder */
+        #left-leben-image-container {
+            position: absolute;
+            bottom: -1380px;
+            left: -70%; /* Adjust the left position as needed */
+            transform: translateX(-50%);
+            width: 650px;
+            height: 850px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #left-leben-inserted-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .book {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            #image-container,
+            #bottom-image-container,
+            #middle-image-container,
+            #another-image-container,
+            #bewerbung-image-container,
+            #left-leben-image-container {
+                width: 100%;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/b0f29e9bfe.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Previous Button -->
+    <button id="prev-btn">
+        <i class="fas fa-arrow-circle-left"></i>
+    </button>
+
+    <!-- Book -->
+    <div id="book" class="book">
+        <!-- Paper 1 -->
+        <div id="p1" class="paper">
+            <div class="front">
+                <div id="f1" class="front-content">
+                    <h1>Zeugnisse</h1>
+                </div>
+            </div>
+            <div class="back">
+                <div id="b1" class="back-content">
+                    <img src="9.klasse.jpg" alt="Back Image 1" style="width: 100%; height: 100%;">
+                </div>
+            </div>
+        </div>
+        <!-- Paper 2 -->
+        <div id="p2" class="paper">
+            <div class="front">
+                <div id="f2" class="front-content">
+                    <img src="9.klassefallen.jpg" alt="Front Image 2" style="width: 100%; height: 100%;">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b2" class="back-content">
+                    <img src="8klasse.jpg" alt="Back Image 2" style="width: 100%; height: 100%;">
+                </div>
+            </div>
+        </div>
+        <!-- Paper 3 -->
+        <div id="p3" class="paper">
+            <div class="front">
+                <div id="f3" class="front-content">
+                    <img src="8un.jpg" alt="Front Image 3" style="width: 100%; height: 100%;">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b3" class="back-content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Next Button -->
+    <button id="next-btn">
+        <i class="fas fa-arrow-circle-right"></i>
+    </button>
+
+    <!-- Image Placeholder -->
+    <div id="image-container">
+        <!-- Insert your image here -->
+        <img id="inserted-image" src="bakalim.png" alt="Inserted Image">
+        <div id="line"></div>
+
+        <div id="erfahrungen">Spiele</div>
+    </div>
+
+    <!-- Set the background color under the line to green -->
+    <div id="image-under-yellow-background">
+        <!-- This div will have the green background color under the yellow section -->
+    </div>
+
+    <!-- Bottom Image Placeholder -->
+    <div id="bottom-image-container">
+        <!-- Insert your image here -->
+        <img id="bottom-inserted-image" src="leben.jpg" alt="Bottom Inserted Image">
+    </div>
+
+    <!-- Middle Image Placeholder -->
+    <div id="middle-image-container">
+        <!-- Insert your image here -->
+        <img id="middle-inserted-image" src="ausweis vorne.jpg" src alt="Middle Inserted Image">
+    </div>
+
+    <!-- Another Image Placeholder -->
+    <div id="another-image-container">
+        <!-- Insert your new image here -->
+        <img id="another-inserted-image" src="buy.png" alt="Another Inserted Image">
+        <div id="another-line"></div>
+
+        <div id="another-link">Website</div>
+    </div>
+
+    <!-- Bewerbung Image Placeholder -->
+    <div id="bewerbung-image-container">
+        <!-- Insert your "bewerbung" image here -->
+        <img id="bewerbung-inserted-image" src="bewerbung.jpg" alt="Bewerbung Image">
+    </div>
+
+    <!-- Adjusted "Leben" Image Placeholder -->
+    <div id="left-leben-image-container">
+        <!-- Insert your adjusted "leben" image here -->
+        <img id="left-leben-inserted-image" src="leben.jpg" alt="Left Leben Image">
+    </div>
+
+    <script>
+        // References to DOM Elements
+        const prevBtn = document.querySelector("#prev-btn");
+        const nextBtn = document.querySelector("#next-btn");
+        const book = document.querySelector("#book");
+        const insertedImage = document.querySelector("#inserted-image");
+        const middleImage = document.querySelector("#middle-inserted-image");
+        const anotherImage = document.querySelector("#another-inserted-image");
+        const bewerbungImage = document.querySelector("#bewerbung-inserted-image");
+        const leftLebenImage = document.querySelector("#left-leben-inserted-image");
+
+        const paper1 = document.querySelector("#p1");
+        const paper2 = document.querySelector("#p2");
+        const paper3 = document.querySelector("#p3");
+
+        // Additional variable to keep track of middle image state
+        let isMiddleImageFlipped = false;
+
+        // Event Listener
+        prevBtn.addEventListener("click", goPrevPage);
+        nextBtn.addEventListener("click", goNextPage);
+        insertedImage.addEventListener("click", goToJisokar);
+        middleImage.addEventListener("click", toggleMiddleImage);
+        anotherImage.addEventListener("click", goToAnotherLink);
+
+        // Business Logic
+        let currentLocation = 1;
+        let numOfPapers = 3;
+        let maxLocation = numOfPapers + 1;
+
+        function openBook() {
+            book.style.transform = "translateX(50%)";
+            prevBtn.style.transform = "translateX(-180px)";
+            nextBtn.style.transform = "translateX(180px)";
+        }
+
+        function closeBook(isAtBeginning) {
+            if (isAtBeginning) {
+                book.style.transform = "translateX(0%)";
+            } else {
+                book.style.transform = "translateX(100%)";
+            }
+
+            prevBtn.style.transform = "translateX(0px)";
+            nextBtn.style.transform = "translateX(0px)";
+        }
+
+        function goNextPage() {
+            if (currentLocation < maxLocation) {
+                switch (currentLocation) {
+                    case 1:
+                        openBook();
+                        paper1.classList.add("flipped");
+                        paper1.style.zIndex = 1;
+                        break;
+                    case 2:
+                        paper2.classList.add("flipped");
+                        paper2.style.zIndex = 2;
+                        break;
+                    case 3:
+                        paper3.classList.add("flipped");
+                        paper3.style.zIndex = 3;
+                        closeBook(false);
+                        break;
+                    default:
+                        throw new Error("unknown state");
+                }
+                currentLocation++;
+            }
+        }
+
+        function goPrevPage() {
+            if (currentLocation > 1) {
+                switch (currentLocation) {
+                    case 2:
+                        closeBook(true);
+                        paper1.classList.remove("flipped");
+                        paper1.style.zIndex = 3;
+                        break;
+                    case 3:
+                        paper2.classList.remove("flipped");
+                        paper2.style.zIndex = 2;
+                        break;
+                    case 4:
+                        openBook();
+                        paper3.classList.remove("flipped");
+                        paper3.style.zIndex = 1;
+                        break;
+                    default:
+                        throw new Error("unknown state");
+                }
+
+                currentLocation--;
+            }
+        }
+
+        function goToJisokar() {
+            // Open the link in a new tab or window
+            window.open("https://jiifors.itch.io/jisokar", "_blank");
+        }
+
+        function goToAnotherLink() {
+            // Open the link in a new tab or window
+            window.open("https://haithamqabban.github.io/Car-Couture/", "_blank");
+        }
+
+        function toggleMiddleImage() {
+            isMiddleImageFlipped = !isMiddleImageFlipped;
+            const transformValue = isMiddleImageFlipped ? "rotateY(180deg)" : "rotateY(0deg)";
+            middleImage.style.transform = transformValue;
+
+            // Add logic to change the middle image source
+            const newImageSrc = isMiddleImageFlipped ? "ausweis - hintern.jpg" : "ausweis vorne.jpg";
+            middleImage.src = newImageSrc;
+        }
+    </script>
+</body>
+
+</html>
