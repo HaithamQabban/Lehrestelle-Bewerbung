@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewerbung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        section {
+            height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            position: relative; /* Added position property */
+        }
+
+        #section1 { background-color: #fff8e7; }
+
+        /* Styling for the button */
+        .custom-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #faeac7;
+            text-decoration: none;
+            margin-left: 1850px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Styling for image containers */
+        .image-container {
+            width: 50%;
+            max-width: 600px;
+            text-align: center;
+            margin-left: 100px;
+         
+        }
+
+        .image-container img {
+            width: 100%;
+            margin-left: -100px;
+            height: auto;
+            max-width: 100%;
+            border-radius: 5px; /* Optional: Add rounded corners to images */
+            margin-bottom: 10px; /* Adjust margin as needed */
+        }
+    </style>
+</head>
+<body>
+
+    <section id="section1">
+        
+
+        <!-- Image placeholders within Section 1 -->
+        <div class="image-container">
+            <img src="bewerbung.jpg" alt="Image 1">
+        </div>
+
+        <div class="image-container">
+            <img src="leben.jpg" alt="Image 2">
+        </div>
+    </section>
+
+    <!-- Use the class 'custom-button' to style the link as a button -->
+    <a href="index.html" class="custom-button">Go</a>
+
+    <script>
+        function smoothScroll(event) {
+            event.preventDefault();
+            const targetId = event.currentTarget.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
+
+            window.scroll({
+                top: targetSection.offsetTop,
+                behavior: "smooth"
+            });
+        }
+    </script>
+
+</body>
+</html>
