@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            background: hsl(225, 73%, 57%);
+            background: #9b1c31 ;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,6 +21,7 @@
             background: #4169e1;
             width: 350px;
             height: 500px;
+            margin: 20px auto;
             box-shadow: 0px 2px 38px rgba(0, 0, 0, 0.2);
             overflow: hidden;
         }
@@ -72,7 +73,7 @@
 
         .button-container {
             text-align: center;
-            margin-top: 20px; /* Adjust the margin as needed */
+            margin-top: 5px; /* Adjust the margin as needed */
         }
 
         #go-to-ausweis-btn {
@@ -98,16 +99,17 @@
 
 <body>
     <div class="paper-shadow">
-        <img src="bewer.jpg" alt="Your Image">
+        <img src="lebenslaud.jpg" alt="Your Image">
     </div>
+
     <div class="button-container">
-        <button id="go-to-ausweis-btn" onclick="goToAusweis()">Lebenslauf</button>
+        <button id="go-to-ausweis-btn" onclick="goToAusweis()">Zeugnisse</button>
     </div>
+
     <script>
-        // Function to navigate to Ausweis.html
         function goToAusweis() {
             // Change the window.location.href to the path of your Ausweis.html file
-            window.location.href = 'lebenslauf.html';
+            window.location.href = 'book.html';
         }
     </script>
 </body>
